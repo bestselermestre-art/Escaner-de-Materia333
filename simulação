@@ -1,0 +1,27 @@
+import time
+import random
+
+# Simulação de um corte de solo (10 metros de profundidade)
+# 0 = Terra, 1 = Metal (Recurso), 2 = Gás (Risco), 3 = Vazio
+solo_real = [0, 0, 1, 0, 3, 0, 2, 0, 0, 1]
+
+def escaneamento_atm(ponto):
+    # Simula o ruído que um sensor real teria
+    ruido = random.uniform(-0.1, 0.1)
+    leitura = solo_real[ponto] + ruido
+    return leitura
+
+print("--- INICIANDO ESCÂNER DE MATÉRIA (MODO PENETRAÇÃO) ---")
+for i in range(len(solo_real)):
+    dados = escaneamento_atm(i)
+    
+    # Aqui entra a sua IA/Lógica de Identificação
+    if dados > 0.8 and dados < 1.2:
+        status = "[!] METAL DETECTADO - ALTA DENSIDADE"
+    elif dados > 1.8:
+        status = "[X] PERIGO: BOLSA DE GÁS DETECTADA"
+    else:
+        status = "[.] Solo Estável"
+        
+    print(f"Profundidade {i}m: {status} (Sinal: {dados:.2f})")
+    time.sleep(0.5)
